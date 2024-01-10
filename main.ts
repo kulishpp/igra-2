@@ -18,20 +18,22 @@ basic.forever(function on_forever() {
 basic.forever(function on_forever2() {
     
 })
-
+let lastCollisionTime = 0
 basic.forever(function on_forever3() {
-    
     if (sprite.isTouching(apple)) {
-        if (true) {
+        // Check if 10 seconds have passed since the last collision
+        let currentTime = input.runningTime()
+        if (currentTime - lastCollisionTime >= 10000) {
             game.addScore(1)
             apple.delete()
             basic.pause(100)
             apple = game.createSprite(randint(-4, 4), randint(-4, 4))
+            lastCollisionTime = currentTime
         } else {
             basic.pause(100)
             game.gameOver()
         }
-        
+    } else {
+        basic.pause(100)
     }
-    
 })
